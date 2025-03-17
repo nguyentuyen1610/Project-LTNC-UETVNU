@@ -404,3 +404,21 @@
 
 1741964065 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\project-ltnc-uetvnu\game.cpp
 
+1742194652 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\project-ltnc-uetvnu\main.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<stdio.h>
+	<stdbool.h>
+	<stdlib.h>
+	<time.h>
+
+1738962281 c:\sdl2_mixer-2.8.1\x86_64-w64-mingw32\include\sdl2\sdl_mixer.h
+	"SDL_stdinc.h"
+	"SDL_rwops.h"
+	"SDL_audio.h"
+	"SDL_endian.h"
+	"SDL_version.h"
+	"begin_code.h"
+	"close_code.h"
+
