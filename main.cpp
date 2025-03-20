@@ -9,11 +9,11 @@
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
-#define BIRD_SIZE 30
-#define PIPE_WIDTH 60
+#define BIRD_SIZE 40
+#define PIPE_WIDTH 65
 #define PIPE_GAP 150
 #define GRAVITY 1
-#define JUMP_STRENGTH 12
+#define JUMP_STRENGTH 10
 #define PIPE_SPEED 9
 
 SDL_Window* window = NULL;
@@ -23,6 +23,7 @@ SDL_Texture* birdTextureDark = NULL;
 SDL_Texture* pipeTexture = NULL;
 SDL_Texture* backgroundTexture = NULL;
 Mix_Music* bgMusic = NULL;
+Mix_Chunk* jumpSound = NULL;
 TTF_Font* font = NULL;
 SDL_Color white = {255, 255, 255, 255};
 
@@ -41,13 +42,12 @@ int score = 0;
 bool gameOver = false;
 
 SDL_Texture* loadTexture(const char* path) {
-    SDL_Texture* texture = NULL;
     SDL_Surface* loadedSurface = IMG_Load(path);
     if (!loadedSurface) {
         printf("Không thể tải ảnh %s! Lỗi: %s\n", path, IMG_GetError());
         return NULL;
     }
-    texture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
     SDL_FreeSurface(loadedSurface);
     return texture;
 }
@@ -81,6 +81,11 @@ void init() {
     bgMusic = Mix_LoadMUS("sound.mp3");
     if (bgMusic) Mix_PlayMusic(bgMusic, -1);
 
+    jumpSound = Mix_LoadWAV("sound.wav");
+    if (!jumpSound) {
+        printf("Không thể tải sound.wav! Lỗi: %s\n", Mix_GetError());
+    }
+
     bird.x = SCREEN_WIDTH / 4;
     bird.y = SCREEN_HEIGHT / 2;
     bird.velocity = 0;
@@ -98,6 +103,7 @@ void close() {
     SDL_DestroyTexture(pipeTexture);
     SDL_DestroyTexture(backgroundTexture);
     Mix_FreeMusic(bgMusic);
+    Mix_FreeChunk(jumpSound);
     TTF_CloseFont(font);
 
     SDL_DestroyRenderer(renderer);
@@ -112,8 +118,13 @@ void handleInput(SDL_Event* event) {
     if (event->type == SDL_KEYDOWN) {
         if (event->key.keysym.sym == SDLK_SPACE && !gameOver) {
             bird.velocity = -JUMP_STRENGTH;
+            Mix_PlayChannel(-1, jumpSound, 0);
         }
     }
+}
+
+bool checkCollision(SDL_Rect a, SDL_Rect b) {
+    return SDL_HasIntersection(&a, &b);
 }
 
 void update() {
@@ -136,18 +147,25 @@ void update() {
             score++;
         }
 
-        if (bird.x + BIRD_SIZE > pipes[i].x && bird.x < pipes[i].x + PIPE_WIDTH) {
-            if (bird.y < pipes[i].height || bird.y + BIRD_SIZE > pipes[i].height + PIPE_GAP) {
-                gameOver = true;
-                return;
-            }
+        // Tạo hitbox chính xác hơn
+        SDL_Rect birdHitbox = {bird.x + 5, bird.y + 5, BIRD_SIZE - 10, BIRD_SIZE - 10};
+
+        SDL_Rect upperPipeMain = {pipes[i].x + 10, 0, PIPE_WIDTH - 20, pipes[i].height};
+        SDL_Rect lowerPipeMain = {pipes[i].x + 10, pipes[i].height + PIPE_GAP, PIPE_WIDTH - 20, SCREEN_HEIGHT - (pipes[i].height + PIPE_GAP)};
+
+        SDL_Rect upperPipeCurve = {pipes[i].x, pipes[i].height - 10, PIPE_WIDTH, 10};
+        SDL_Rect lowerPipeCurve = {pipes[i].x, pipes[i].height + PIPE_GAP, PIPE_WIDTH, 10};
+
+        if (checkCollision(birdHitbox, upperPipeMain) || checkCollision(birdHitbox, lowerPipeMain) ||
+            checkCollision(birdHitbox, upperPipeCurve) || checkCollision(birdHitbox, lowerPipeCurve)) {
+            gameOver = true;
+            return;
         }
     }
 }
 
 void render() {
     SDL_RenderClear(renderer);
-
     SDL_Rect bgRect = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
     SDL_RenderCopy(renderer, backgroundTexture, NULL, &bgRect);
 
@@ -175,10 +193,8 @@ void render() {
 
 int main(int argc, char* argv[]) {
     init();
-
     bool quit = false;
     SDL_Event event;
-
     while (!quit) {
         while (SDL_PollEvent(&event) != 0) {
             if (event.type == SDL_QUIT) {
@@ -186,13 +202,10 @@ int main(int argc, char* argv[]) {
             }
             handleInput(&event);
         }
-
         update();
         render();
-
         SDL_Delay(30);
     }
-
     close();
     return 0;
 }
