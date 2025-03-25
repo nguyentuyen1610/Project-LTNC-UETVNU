@@ -44,10 +44,18 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="capy.cpp" />
+		<Unit filename="capy.h" />
 		<Unit filename="game.cpp" />
 		<Unit filename="game.h" />
 		<Unit filename="head.h" />
+		<Unit filename="lib.cpp" />
+		<Unit filename="lib.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="pipe.cpp" />
+		<Unit filename="pipe.h" />
+		<Unit filename="sound.cpp" />
+		<Unit filename="sound.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
