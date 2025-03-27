@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1742916884 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\tét\main.cpp
+1743043343 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\tét\main.cpp
 	"game.h"
 
 1698944750 c:\sdl2-2.28.5\x86_64-w64-mingw32\include\sdl2\sdl.h
@@ -404,7 +404,7 @@
 1742917248 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\project-ltnc-uetvnu\game.cpp
 	"game.h"
 
-1742916884 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\project-ltnc-uetvnu\main.cpp
+1742974584 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\project-ltnc-uetvnu\main.cpp
 	"game.h"
 
 1738962281 c:\sdl2_mixer-2.8.1\x86_64-w64-mingw32\include\sdl2\sdl_mixer.h
@@ -421,10 +421,10 @@
 	"begin_code.h"
 	"close_code.h"
 
-1742917248 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\tét\game.cpp
+1743045250 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\tét\game.cpp
 	"game.h"
 
-1742916884 c:\users\nitro5\onedrive - vnu.edu.vn\documents\tét\game.h
+1743044298 c:\users\nitro5\onedrive - vnu.edu.vn\documents\tét\game.h
 	"capy.h"
 	"pipe.h"
 	"lib.h"
@@ -439,7 +439,7 @@
 1742917050 c:\users\nitro5\onedrive - vnu.edu.vn\documents\tét\lib.h
 	"head.h"
 
-1742917050 c:\users\nitro5\onedrive - vnu.edu.vn\documents\tét\sound.h
+1743041836 c:\users\nitro5\onedrive - vnu.edu.vn\documents\tét\sound.h
 	"head.h"
 
 1742917050 c:\users\nitro5\onedrive - vnu.edu.vn\documents\tét\head.h
@@ -452,7 +452,7 @@
 	<stdlib.h>
 	<time.h>
 
-1742916884 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\tét\lib.cpp
+1743042069 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\tét\lib.cpp
 	"lib.h"
 
 1742917050 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\tét\sound.cpp
@@ -462,7 +462,7 @@
 	"capy.h"
 	"lib.h"
 
-1742917283 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\tét\pipe.cpp
+1742917409 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\tét\pipe.cpp
 	"pipe.h"
 	"lib.h"
 

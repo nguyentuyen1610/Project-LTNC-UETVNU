@@ -1,7 +1,6 @@
 #include "game.h"
 
-
-void initGame(SDL_Window** window, SDL_Renderer** renderer, Bird* bird, Pipe pipes[], SDL_Texture* birdTextures[], SDL_Texture** pipeTexture, SDL_Texture** backgroundTexture, TTF_Font** font, Mix_Music** bgMusic, Mix_Chunk** jumpSound) {
+void initGame(SDL_Window** window, SDL_Renderer** renderer, Bird* bird, Pipe pipes[], SDL_Texture* birdTextures[], SDL_Texture** pipeTexture, SDL_Texture** backgroundTexture, SDL_Texture** gameTexture, SDL_Texture** huongdanTexture, TTF_Font** font, Mix_Music** bgMusic, Mix_Chunk** jumpSound) {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
     IMG_Init(IMG_INIT_PNG);
     TTF_Init();
@@ -16,6 +15,8 @@ void initGame(SDL_Window** window, SDL_Renderer** renderer, Bird* bird, Pipe pip
     birdTextures[3] = loadTexture(*renderer, "capy4.png");
     *pipeTexture = loadTexture(*renderer, "pipe.png");
     *backgroundTexture = loadTexture(*renderer, "backg.png");
+    *gameTexture = loadTexture(*renderer, "game.png");
+    *huongdanTexture = loadTexture(*renderer, "huongdan.png");
 
     *font = TTF_OpenFont("arial.ttf", 24);
     if (!*font) {
@@ -31,13 +32,15 @@ void initGame(SDL_Window** window, SDL_Renderer** renderer, Bird* bird, Pipe pip
     initPipes(pipes);
 }
 
-void closeGame(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* birdTextures[], SDL_Texture* pipeTexture, SDL_Texture* backgroundTexture, SDL_Texture* scoreTexture, TTF_Font* font, Mix_Music* bgMusic, Mix_Chunk* jumpSound) {
+void closeGame(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* birdTextures[], SDL_Texture* pipeTexture, SDL_Texture* backgroundTexture, SDL_Texture* scoreTexture, SDL_Texture* gameTexture, SDL_Texture* huongdanTexture, TTF_Font* font, Mix_Music* bgMusic, Mix_Chunk* jumpSound) {
     for (int i = 0; i < 4; i++) {
         SDL_DestroyTexture(birdTextures[i]);
     }
     SDL_DestroyTexture(pipeTexture);
     SDL_DestroyTexture(backgroundTexture);
     SDL_DestroyTexture(scoreTexture);
+    SDL_DestroyTexture(gameTexture);
+    SDL_DestroyTexture(huongdanTexture);
     Mix_FreeMusic(bgMusic);
     Mix_FreeChunk(jumpSound);
     TTF_CloseFont(font);
@@ -49,11 +52,22 @@ void closeGame(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* birdText
     SDL_Quit();
 }
 
-void handleInput(SDL_Event* event, Bird* bird, Mix_Chunk* jumpSound, bool* gameOver) {
+void handleInput(SDL_Event* event, Bird* bird, Mix_Chunk* jumpSound, bool* gameOver, bool* paused, int* score, Pipe pipes[]) {
     if (event->type == SDL_KEYDOWN) {
-        if (event->key.keysym.sym == SDLK_SPACE && !*gameOver) {
-            bird->velocity = -JUMP_STRENGTH;
-            Mix_PlayChannel(-1, jumpSound, 0);
+        if (event->key.keysym.sym == SDLK_SPACE) {
+            if (*gameOver) {
+                *gameOver = false;
+                *paused = true;
+                bird->y = SCREEN_HEIGHT / 2;
+                bird->velocity = 0;
+                *score = 0; // Reset score
+                initPipes(pipes); // Reset pipes
+            } else if (*paused) {
+                *paused = false;
+            } else {
+                bird->velocity = -JUMP_STRENGTH;
+                Mix_PlayChannel(-1, jumpSound, 0);
+            }
         }
     }
 }
@@ -88,7 +102,7 @@ void updateGame(Bird* bird, Pipe pipes[], int* score, bool* gameOver) {
     }
 }
 
-void renderGame(SDL_Renderer* renderer, Bird* bird, Pipe pipes[], SDL_Texture* birdTextures[], SDL_Texture* pipeTexture, SDL_Texture* backgroundTexture, SDL_Texture** scoreTexture, TTF_Font* font, int score) {
+void renderGame(SDL_Renderer* renderer, Bird* bird, Pipe pipes[], SDL_Texture* birdTextures[], SDL_Texture* pipeTexture, SDL_Texture* backgroundTexture, SDL_Texture** scoreTexture, TTF_Font* font, int score, bool gameOver, int* highestScore, bool* paused) {
     SDL_RenderClear(renderer);
     SDL_Rect bgRect = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
     SDL_RenderCopy(renderer, backgroundTexture, NULL, &bgRect);
@@ -96,20 +110,58 @@ void renderGame(SDL_Renderer* renderer, Bird* bird, Pipe pipes[], SDL_Texture* b
     renderBird(renderer, bird, birdTextures);
     renderPipes(renderer, pipes, pipeTexture);
 
-    // Display score
+    // Hiển thị điểm số hiện tại
     char scoreText[32];
     sprintf(scoreText, "Score: %d", score);
 
     if (*scoreTexture) {
         SDL_DestroyTexture(*scoreTexture);
     }
-    *scoreTexture = renderText(renderer, scoreText, font, {255, 255, 255, 255});
+    *scoreTexture = renderText(renderer, scoreText, font, {0, 0, 0, 255});
 
     if (*scoreTexture) {
         int textWidth, textHeight;
         SDL_QueryTexture(*scoreTexture, NULL, NULL, &textWidth, &textHeight);
         SDL_Rect scoreRect = {SCREEN_WIDTH / 2 - textWidth / 2, 20, textWidth, textHeight};
         SDL_RenderCopy(renderer, *scoreTexture, NULL, &scoreRect);
+    }
+
+    // Static textures để giữ trạng thái giữa các khung hình
+    static SDL_Texture* highestScoreTexture = NULL;
+    static SDL_Texture* playAgainTexture = NULL;
+
+    if (gameOver) {
+        // Cập nhật highest score nếu có điểm cao hơn
+        if (score > *highestScore) {
+            *highestScore = score;
+            if (highestScoreTexture) {
+                SDL_DestroyTexture(highestScoreTexture);
+            }
+            char highestScoreText[32];
+            sprintf(highestScoreText, "Highest Score: %d", *highestScore);
+            highestScoreTexture = renderText(renderer, highestScoreText, font, {0, 0, 0, 255});
+        }
+
+        // Hiển thị Highest Score nếu có
+        if (highestScoreTexture) {
+            int textWidth, textHeight;
+            SDL_QueryTexture(highestScoreTexture, NULL, NULL, &textWidth, &textHeight);
+            SDL_Rect highestScoreRect = {SCREEN_WIDTH / 2 - textWidth / 2, 60, textWidth, textHeight};
+            SDL_RenderCopy(renderer, highestScoreTexture, NULL, &highestScoreRect);
+        }
+
+        // Chỉ tạo playAgainTexture một lần
+        if (!playAgainTexture) {
+            char playAgainText[] = "Press SPACE to play again";
+            playAgainTexture = renderText(renderer, playAgainText, font, {0, 0, 0, 255});
+        }
+
+        if (playAgainTexture) {
+            int textWidth, textHeight;
+            SDL_QueryTexture(playAgainTexture, NULL, NULL, &textWidth, &textHeight);
+            SDL_Rect playAgainRect = {SCREEN_WIDTH / 2 - textWidth / 2, 120, textWidth, textHeight};
+            SDL_RenderCopy(renderer, playAgainTexture, NULL, &playAgainRect);
+        }
     }
 
     SDL_RenderPresent(renderer);
