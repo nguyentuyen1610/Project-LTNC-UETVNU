@@ -19,17 +19,15 @@ int main(int argc, char* argv[]) {
     bool gameOver = false;
     bool paused = true;
 
-    initGame(&window, &renderer, &bird, pipes, birdTextures, &pipeTexture, &backgroundTexture, &gameTexture, &huongdanTexture, &font, &bgMusic, &jumpSound);
+    initGame(&window, &renderer, &bird, pipes, birdTextures, &pipeTexture,
+              &backgroundTexture, &gameTexture, &huongdanTexture, &font, &bgMusic, &jumpSound);
 
-    // Display game.png for 3 seconds over background
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
     SDL_Rect gameRect = {SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2};
     SDL_RenderCopy(renderer, gameTexture, NULL, &gameRect);
     SDL_RenderPresent(renderer);
     SDL_Delay(3000);
-
-    // Display huongdan.png for 2 seconds over background
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
     SDL_Rect huongdanRect = {SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2};
@@ -49,10 +47,12 @@ int main(int argc, char* argv[]) {
         if (!paused) {
             updateGame(&bird, pipes, &score, &gameOver);
         }
-        renderGame(renderer, &bird, pipes, birdTextures, pipeTexture, backgroundTexture, &scoreTexture, font, score, gameOver, &highestScore, &paused);
+        renderGame(renderer, &bird, pipes, birdTextures, pipeTexture,
+                    backgroundTexture, &scoreTexture, font, score, gameOver, &highestScore, &paused);
         SDL_Delay(30);
     }
 
-    closeGame(window, renderer, birdTextures, pipeTexture, backgroundTexture, scoreTexture, gameTexture, huongdanTexture, font, bgMusic, jumpSound);
+    closeGame(window, renderer, birdTextures, pipeTexture, backgroundTexture,
+               scoreTexture, gameTexture, huongdanTexture, font, bgMusic, jumpSound);
     return 0;
 }

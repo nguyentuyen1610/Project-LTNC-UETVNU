@@ -1,6 +1,10 @@
 #include "game.h"
 
-void initGame(SDL_Window** window, SDL_Renderer** renderer, Bird* bird, Pipe pipes[], SDL_Texture* birdTextures[], SDL_Texture** pipeTexture, SDL_Texture** backgroundTexture, SDL_Texture** gameTexture, SDL_Texture** huongdanTexture, TTF_Font** font, Mix_Music** bgMusic, Mix_Chunk** jumpSound) {
+void initGame(SDL_Window** window, SDL_Renderer** renderer,
+               Bird* bird, Pipe pipes[], SDL_Texture* birdTextures[],
+               SDL_Texture** pipeTexture, SDL_Texture** backgroundTexture,
+                SDL_Texture** gameTexture, SDL_Texture** huongdanTexture,
+                TTF_Font** font, Mix_Music** bgMusic, Mix_Chunk** jumpSound) {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
     IMG_Init(IMG_INIT_PNG);
     TTF_Init();
@@ -32,7 +36,10 @@ void initGame(SDL_Window** window, SDL_Renderer** renderer, Bird* bird, Pipe pip
     initPipes(pipes);
 }
 
-void closeGame(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* birdTextures[], SDL_Texture* pipeTexture, SDL_Texture* backgroundTexture, SDL_Texture* scoreTexture, SDL_Texture* gameTexture, SDL_Texture* huongdanTexture, TTF_Font* font, Mix_Music* bgMusic, Mix_Chunk* jumpSound) {
+void closeGame(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* birdTextures[],
+               SDL_Texture* pipeTexture, SDL_Texture* backgroundTexture,
+               SDL_Texture* scoreTexture, SDL_Texture* gameTexture,
+                SDL_Texture* huongdanTexture, TTF_Font* font, Mix_Music* bgMusic, Mix_Chunk* jumpSound) {
     for (int i = 0; i < 4; i++) {
         SDL_DestroyTexture(birdTextures[i]);
     }
@@ -102,7 +109,10 @@ void updateGame(Bird* bird, Pipe pipes[], int* score, bool* gameOver) {
     }
 }
 
-void renderGame(SDL_Renderer* renderer, Bird* bird, Pipe pipes[], SDL_Texture* birdTextures[], SDL_Texture* pipeTexture, SDL_Texture* backgroundTexture, SDL_Texture** scoreTexture, TTF_Font* font, int score, bool gameOver, int* highestScore, bool* paused) {
+void renderGame(SDL_Renderer* renderer, Bird* bird, Pipe pipes[],
+                SDL_Texture* birdTextures[], SDL_Texture* pipeTexture,
+                SDL_Texture* backgroundTexture, SDL_Texture** scoreTexture,
+                TTF_Font* font, int score, bool gameOver, int* highestScore, bool* paused) {
     SDL_RenderClear(renderer);
     SDL_Rect bgRect = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
     SDL_RenderCopy(renderer, backgroundTexture, NULL, &bgRect);
@@ -110,7 +120,6 @@ void renderGame(SDL_Renderer* renderer, Bird* bird, Pipe pipes[], SDL_Texture* b
     renderBird(renderer, bird, birdTextures);
     renderPipes(renderer, pipes, pipeTexture);
 
-    // Hiển thị điểm số hiện tại
     char scoreText[32];
     sprintf(scoreText, "Score: %d", score);
 
@@ -126,12 +135,10 @@ void renderGame(SDL_Renderer* renderer, Bird* bird, Pipe pipes[], SDL_Texture* b
         SDL_RenderCopy(renderer, *scoreTexture, NULL, &scoreRect);
     }
 
-    // Static textures để giữ trạng thái giữa các khung hình
     static SDL_Texture* highestScoreTexture = NULL;
     static SDL_Texture* playAgainTexture = NULL;
 
     if (gameOver) {
-        // Cập nhật highest score nếu có điểm cao hơn
         if (score > *highestScore) {
             *highestScore = score;
             if (highestScoreTexture) {
@@ -142,7 +149,6 @@ void renderGame(SDL_Renderer* renderer, Bird* bird, Pipe pipes[], SDL_Texture* b
             highestScoreTexture = renderText(renderer, highestScoreText, font, {0, 0, 0, 255});
         }
 
-        // Hiển thị Highest Score nếu có
         if (highestScoreTexture) {
             int textWidth, textHeight;
             SDL_QueryTexture(highestScoreTexture, NULL, NULL, &textWidth, &textHeight);
@@ -150,7 +156,6 @@ void renderGame(SDL_Renderer* renderer, Bird* bird, Pipe pipes[], SDL_Texture* b
             SDL_RenderCopy(renderer, highestScoreTexture, NULL, &highestScoreRect);
         }
 
-        // Chỉ tạo playAgainTexture một lần
         if (!playAgainTexture) {
             char playAgainText[] = "Press SPACE to play again";
             playAgainTexture = renderText(renderer, playAgainText, font, {0, 0, 0, 255});
