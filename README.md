@@ -36,7 +36,7 @@
 * Nhấn SPACE để điều khiển capybara bay lên.
 * Tránh va chạm với ống nước để đạt điểm cao nhất.
 * Khi thua, nhấn SPACE để chơi lại.
-* Video hướng dẫn [Google Drive]([https://drive.google.com/file/d/1TelfcBAVWYSXlHDnZoncXZ5YW6qz5tZL/view?usp=sharing](https://drive.google.com/file/d/1VetoJRyT46V3m1OQmOPBsts1kaQaCgxq/view?usp=drive_link))
+* Video hướng dẫn [Google Drive](https://drive.google.com/file/d/1VetoJRyT46V3m1OQmOPBsts1kaQaCgxq/view?usp=drive_link)
 [Youtube](https://www.youtube.com/watch?v=-V8599Y6m1w)
 <p align="center">
 <img width="300" height="250" src="huongdan.png">
