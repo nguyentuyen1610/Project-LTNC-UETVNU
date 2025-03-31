@@ -126,7 +126,7 @@ void renderGame(SDL_Renderer* renderer, Bird* bird, Pipe pipes[],
     if (*scoreTexture) {
         SDL_DestroyTexture(*scoreTexture);
     }
-    *scoreTexture = renderText(renderer, scoreText, font, {0, 0, 0, 255});
+    *scoreTexture = renderText(renderer, scoreText, font, {0, 0, 255, 255});
 
     if (*scoreTexture) {
         int textWidth, textHeight;
@@ -146,7 +146,7 @@ void renderGame(SDL_Renderer* renderer, Bird* bird, Pipe pipes[],
             }
             char highestScoreText[32];
             sprintf(highestScoreText, "Highest Score: %d", *highestScore);
-            highestScoreTexture = renderText(renderer, highestScoreText, font, {0, 0, 0, 255});
+            highestScoreTexture = renderText(renderer, highestScoreText, font,{0, 0, 255, 255});
         }
 
         if (highestScoreTexture) {
@@ -158,7 +158,7 @@ void renderGame(SDL_Renderer* renderer, Bird* bird, Pipe pipes[],
 
         if (!playAgainTexture) {
             char playAgainText[] = "Press SPACE to play again";
-            playAgainTexture = renderText(renderer, playAgainText, font, {0, 0, 0, 255});
+            playAgainTexture = renderText(renderer, playAgainText, font,{255, 255, 255, 255});
         }
 
         if (playAgainTexture) {
