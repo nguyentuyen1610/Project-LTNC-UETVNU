@@ -401,10 +401,10 @@
 	"begin_code.h"
 	"close_code.h"
 
-1743344573 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\project-ltnc-uetvnu\game.cpp
+1743403912 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\project-ltnc-uetvnu\game.cpp
 	"game.h"
 
-1743344575 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\project-ltnc-uetvnu\main.cpp
+1743403996 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\project-ltnc-uetvnu\main.cpp
 	"game.h"
 
 1738962281 c:\sdl2_mixer-2.8.1\x86_64-w64-mingw32\include\sdl2\sdl_mixer.h
@@ -486,13 +486,13 @@
 1742917050 c:\users\nitro5\onedrive - vnu.edu.vn\documents\project-ltnc-uetvnu\lib.h
 	"head.h"
 
-1743344570 c:\users\nitro5\onedrive - vnu.edu.vn\documents\project-ltnc-uetvnu\game.h
+1743404049 c:\users\nitro5\onedrive - vnu.edu.vn\documents\project-ltnc-uetvnu\game.h
 	"capy.h"
 	"pipe.h"
 	"lib.h"
 	"sound.h"
 
-1742917050 c:\users\nitro5\onedrive - vnu.edu.vn\documents\project-ltnc-uetvnu\pipe.h
+1743398969 c:\users\nitro5\onedrive - vnu.edu.vn\documents\project-ltnc-uetvnu\pipe.h
 	"head.h"
 
 1743041836 c:\users\nitro5\onedrive - vnu.edu.vn\documents\project-ltnc-uetvnu\sound.h
@@ -501,7 +501,7 @@
 1743042069 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\project-ltnc-uetvnu\lib.cpp
 	"lib.h"
 
-1743375013 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\project-ltnc-uetvnu\pipe.cpp
+1743398969 source:c:\users\nitro5\onedrive - vnu.edu.vn\documents\project-ltnc-uetvnu\pipe.cpp
 	"pipe.h"
 	"lib.h"
 

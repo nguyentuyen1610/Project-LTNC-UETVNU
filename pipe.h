@@ -4,7 +4,8 @@
 
 #define PIPE_WIDTH 65
 #define PIPE_GAP 150
-#define PIPE_SPEED 12
+
+extern int pipeSpeed;
 
 typedef struct {
     int x, height;

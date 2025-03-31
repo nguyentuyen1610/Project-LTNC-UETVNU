@@ -69,6 +69,7 @@ void handleInput(SDL_Event* event, Bird* bird, Mix_Chunk* jumpSound, bool* gameO
                 bird->velocity = 0;
                 *score = 0; // Reset score
                 initPipes(pipes); // Reset pipes
+                 pipeSpeed = 12;
             } else if (*paused) {
                 *paused = false;
             } else {
@@ -83,14 +84,19 @@ void updateGame(Bird* bird, Pipe pipes[], int* score, bool* gameOver) {
     if (*gameOver) return;
 
     updateBird(bird);
-
     if (bird->y + BIRD_SIZE > SCREEN_HEIGHT) {
         *gameOver = true;
         return;
     }
+    if (*score > 10) {
+        pipeSpeed = 15;
+    }
+    if (*score > 20) {
+        pipeSpeed = 16;
+    }
 
     for (int i = 0; i < 2; i++) {
-        pipes[i].x -= PIPE_SPEED;
+        pipes[i].x -= pipeSpeed;
 
         if (pipes[i].x + PIPE_WIDTH < 0) {
             pipes[i].x = SCREEN_WIDTH;

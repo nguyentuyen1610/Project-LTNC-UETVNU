@@ -1,6 +1,8 @@
 #include "pipe.h"
 #include "lib.h"
 
+int pipeSpeed = 12; // Giá trị mặc định ban đầu
+
 void initPipes(Pipe pipes[]) {
     srand(time(NULL));
     for (int i = 0; i < 2; i++) {
@@ -10,8 +12,13 @@ void initPipes(Pipe pipes[]) {
 }
 
 void updatePipes(Pipe pipes[], int* score) {
+    // Cập nhật tốc độ khi điểm đạt 15
+    if (*score >= 15) {
+        pipeSpeed = 15; // Tăng tốc độ lên 15
+    }
+
     for (int i = 0; i < 2; i++) {
-        pipes[i].x -= PIPE_SPEED;
+        pipes[i].x -= pipeSpeed;
 
         if (pipes[i].x + PIPE_WIDTH < 0) {
             pipes[i].x = SCREEN_WIDTH;
@@ -20,6 +27,8 @@ void updatePipes(Pipe pipes[], int* score) {
         }
     }
 }
+
+
 
 void renderPipes(SDL_Renderer* renderer, Pipe pipes[], SDL_Texture* pipeTexture) {
     for (int i = 0; i < 2; i++) {
