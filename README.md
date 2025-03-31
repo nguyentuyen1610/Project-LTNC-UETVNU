@@ -50,3 +50,7 @@
 * Âm thanh nhảy lấy từ [Mixkit](https://mixkit.co/free-sound-effects/game/?fbclid=IwZXh0bgNhZW0CMTEAAR0aQLZUE-p4b-ymNBjwf6IKReo3uqoY0IRzsPzn6BMmfPRwEAIAGgtnhDw_aem_9HE2dA-44lYN7hWKrczbRQ)
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 569be2a7ef38826f8a2a6761ea0047d64c8cf0fc
