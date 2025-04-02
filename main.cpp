@@ -20,8 +20,7 @@ int main(int argc, char* argv[]) {
     bool paused = true;
 
     initGame(&window, &renderer, &bird, pipes, birdTextures, &pipeTexture,
-              &backgroundTexture, &gameTexture, &huongdanTexture, &font, &bgMusic, &jumpSound);
-
+             &backgroundTexture, &gameTexture, &huongdanTexture, &font, &bgMusic, &jumpSound);
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
     SDL_Rect gameRect = {SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2};
@@ -37,6 +36,7 @@ int main(int argc, char* argv[]) {
 
     bool quit = false;
     SDL_Event event;
+
     while (!quit) {
         while (SDL_PollEvent(&event) != 0) {
             if (event.type == SDL_QUIT) {
@@ -44,15 +44,24 @@ int main(int argc, char* argv[]) {
             }
             handleInput(&event, &bird, jumpSound, &gameOver, &paused, &score, pipes);
         }
+
         if (!paused) {
             updateGame(&bird, pipes, &score, &gameOver);
         }
+
         renderGame(renderer, &bird, pipes, birdTextures, pipeTexture,
-                    backgroundTexture, &scoreTexture, font, score, gameOver, &highestScore, &paused);
+                   backgroundTexture, &scoreTexture, font, score, gameOver, &highestScore, &paused);
+
         SDL_Delay(30);
     }
 
+    if (scoreTexture) {
+        SDL_DestroyTexture(scoreTexture);
+        scoreTexture = NULL;
+    }
+
     closeGame(window, renderer, birdTextures, pipeTexture, backgroundTexture,
-               scoreTexture, gameTexture, huongdanTexture, font, bgMusic, jumpSound);
+              gameTexture, huongdanTexture, font, bgMusic, jumpSound);
+
     return 0;
 }

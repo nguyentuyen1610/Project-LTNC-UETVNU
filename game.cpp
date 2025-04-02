@@ -3,8 +3,8 @@
 void initGame(SDL_Window** window, SDL_Renderer** renderer,
                Bird* bird, Pipe pipes[], SDL_Texture* birdTextures[],
                SDL_Texture** pipeTexture, SDL_Texture** backgroundTexture,
-                SDL_Texture** gameTexture, SDL_Texture** huongdanTexture,
-                TTF_Font** font, Mix_Music** bgMusic, Mix_Chunk** jumpSound) {
+               SDL_Texture** gameTexture, SDL_Texture** huongdanTexture,
+               TTF_Font** font, Mix_Music** bgMusic, Mix_Chunk** jumpSound) {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
     IMG_Init(IMG_INIT_PNG);
     TTF_Init();
@@ -38,14 +38,13 @@ void initGame(SDL_Window** window, SDL_Renderer** renderer,
 
 void closeGame(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* birdTextures[],
                SDL_Texture* pipeTexture, SDL_Texture* backgroundTexture,
-               SDL_Texture* scoreTexture, SDL_Texture* gameTexture,
-                SDL_Texture* huongdanTexture, TTF_Font* font, Mix_Music* bgMusic, Mix_Chunk* jumpSound) {
+               SDL_Texture* gameTexture, SDL_Texture* huongdanTexture,
+               TTF_Font* font, Mix_Music* bgMusic, Mix_Chunk* jumpSound) {
     for (int i = 0; i < 4; i++) {
         SDL_DestroyTexture(birdTextures[i]);
     }
     SDL_DestroyTexture(pipeTexture);
     SDL_DestroyTexture(backgroundTexture);
-    SDL_DestroyTexture(scoreTexture);
     SDL_DestroyTexture(gameTexture);
     SDL_DestroyTexture(huongdanTexture);
     Mix_FreeMusic(bgMusic);
@@ -67,9 +66,9 @@ void handleInput(SDL_Event* event, Bird* bird, Mix_Chunk* jumpSound, bool* gameO
                 *paused = true;
                 bird->y = SCREEN_HEIGHT / 2;
                 bird->velocity = 0;
-                *score = 0; // Reset score
-                initPipes(pipes); // Reset pipes
-                 pipeSpeed = 12;
+                *score = 0;
+                initPipes(pipes);
+                pipeSpeed = 12;
             } else if (*paused) {
                 *paused = false;
             } else {
@@ -88,6 +87,7 @@ void updateGame(Bird* bird, Pipe pipes[], int* score, bool* gameOver) {
         *gameOver = true;
         return;
     }
+
     if (*score > 10) {
         pipeSpeed = 15;
     }
@@ -152,11 +152,7 @@ void renderGame(SDL_Renderer* renderer, Bird* bird, Pipe pipes[],
             }
             char highestScoreText[32];
             sprintf(highestScoreText, "Highest Score: %d", *highestScore);
-<<<<<<< HEAD
-            highestScoreTexture = renderText(renderer, highestScoreText, font,{0, 0, 255, 255});
-=======
             highestScoreTexture = renderText(renderer, highestScoreText, font, {0, 0, 255, 255});
->>>>>>> 569be2a7ef38826f8a2a6761ea0047d64c8cf0fc
         }
 
         if (highestScoreTexture) {
@@ -168,11 +164,7 @@ void renderGame(SDL_Renderer* renderer, Bird* bird, Pipe pipes[],
 
         if (!playAgainTexture) {
             char playAgainText[] = "Press SPACE to play again";
-<<<<<<< HEAD
-            playAgainTexture = renderText(renderer, playAgainText, font,{255, 255, 255, 255});
-=======
             playAgainTexture = renderText(renderer, playAgainText, font, {255, 255, 255, 255});
->>>>>>> 569be2a7ef38826f8a2a6761ea0047d64c8cf0fc
         }
 
         if (playAgainTexture) {
