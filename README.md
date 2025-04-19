@@ -31,6 +31,7 @@
 **2. Game Over Screen**
 * Hiển thị điểm số hiện tại và điểm cao nhất.
 * Cho phép chơi lại nhanh bằng cách nhấn SPACE.
+* Khi thua điểm cao nhất lưu vào file text và khi khởi động lại game vẫn còn điểm cao nhất cũ.
 
 # Hướng dẫn <a name="play"></a>
 * Nhấn SPACE để điều khiển capybara bay lên.
@@ -46,11 +47,5 @@
 
 * Ảnh Capy vẽ bằng [8bit Painter](https://play.google.com/store/apps/details?id=com.onetap.bit8painter)
 * Nền và ống tạo bởi [Meta AI](https://ai.meta.com/meta-ai/)
-* Nhạc nền lấy từ [Parabay](https://pixabay.com/vi/music/search/lofi/?fbclid=IwZXh0bgNhZW0CMTEAAR2Pe8Uet4KfY68IOV_Lq-MMuII_w0j7xA0B2rPKOE1adSPbrM7odikEtMQ_aem_9JHalpCkn9oYqYGJ7baMpQ)
+* Nhạc nền lấy từ [Pixabay](https://pixabay.com/vi/music/search/lofi/?fbclid=IwZXh0bgNhZW0CMTEAAR2Pe8Uet4KfY68IOV_Lq-MMuII_w0j7xA0B2rPKOE1adSPbrM7odikEtMQ_aem_9JHalpCkn9oYqYGJ7baMpQ)
 * Âm thanh nhảy lấy từ [Mixkit](https://mixkit.co/free-sound-effects/game/?fbclid=IwZXh0bgNhZW0CMTEAAR0aQLZUE-p4b-ymNBjwf6IKReo3uqoY0IRzsPzn6BMmfPRwEAIAGgtnhDw_aem_9HE2dA-44lYN7hWKrczbRQ)
-
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 569be2a7ef38826f8a2a6761ea0047d64c8cf0fc
